@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+  labels:
+    app: {{ .Release.Name }}-app
+spec:
+  replicas: {{ .Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-app
+        image: {{ .Values.app.image }}
+        ports: 
+        - containerPort: 8080
+        env:
+        - name: DB_URL
+          value: {{ .Release.Name }}-mysql
+        - name: DB_USERNAME
+          value: {{ .Values.mysql.db.user }}
+        - name: DB_NAME
+          value: {{ .Values.mysql.db.name }}
+        - name: DB_PASSWORD
+          value: {{ .Values.mysql.db.password }}

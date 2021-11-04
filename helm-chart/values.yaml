@@ -1,0 +1,17 @@
+app:
+    image: omarelsheekh/spring-boot-mysql-example
+    replicas: 2
+mysql:
+    image:
+        repository: omarelsheekh/bitnami-mysql
+        tag: "5.7.21"
+    db:
+        user: user
+        password: password
+        name: test
+    replication:
+        user: replicator
+        password: password
+        enabled: true
+    slave:
+        replicas: 2
